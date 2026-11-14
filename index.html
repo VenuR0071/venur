@@ -4,837 +4,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Venu R - Interactive Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <title>Venu R - Systems Engineer | AI/ML | DevOps</title>
+    <meta name="description" content="Venu R is a systems engineer in Chennai who builds LLM knowledge systems, anomaly detection and IoT access control platforms.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables for theming */
+        /* ---------- Tokens ---------- */
         :root {
-            /* Light theme colors */
-            --bg-color: #f4f4f9;
-            --text-color: #333;
-            --primary-color: skyblue;
-            --secondary-color: deepskyblue;
-            --card-bg: #fff;
-            --border-color: #ddd;
-            --header-bg: #fff;
-            --header-border: #ddd;
-            --button-filter-bg: #e9ecef;
-            --button-filter-hover-bg: #ccc;
-            --box-shadow-light: rgba(0, 0, 0, 0.05);
-            --box-shadow-medium: rgba(0, 0, 0, 0.1);
-            --box-shadow-strong: rgba(0, 0, 0, 0.15);
-            --modal-overlay-bg: rgba(0, 0, 0, 0.8);
-            --footer-bg: #333;
-            --footer-text-color: #fff;
+            --paper: #E9EEF3;
+            --surface: #F7F9FB;
+            --ink: #0F2338;
+            --ink-soft: #4A5D70;
+            --line: rgba(15, 35, 56, 0.16);
+
+            /* Patch-cable colours: each one marks a domain across the whole page */
+            --c-sys: #17A673;   /* systems, networking, IoT */
+            --c-ai: #F4B400;    /* AI, ML, computer vision */
+            --c-web: #1E5EFF;   /* web and full stack */
+            --c-ops: #E0457B;   /* DevOps */
+            --link: #1747CC;
+
+            --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+            --font-text: "Source Serif 4", Georgia, serif;
+            --rail: 232px;
         }
 
-        /* Dark theme colors */
         body.dark-theme {
-            --bg-color: #1a1a2e;
-            --text-color: #e0e0e0; /* Light grey for good contrast on dark backgrounds */
-            --primary-color: skyblue; /* Keep accent color */
-            --secondary-color: deepskyblue; /* Keep accent color */
-            --card-bg: #2c2c4d;
-            --border-color: #4a4a6e;
-            --header-bg: #2c2c4d;
-            --header-border: #4a4a6e;
-            --button-filter-bg: #4a4a6e;
-            --button-filter-hover-bg: #5a5a7e;
-            --box-shadow-light: rgba(0, 0, 0, 0.3);
-            --box-shadow-medium: rgba(0, 0, 0, 0.4);
-            --box-shadow-strong: rgba(0, 0, 0, 0.5);
-            --modal-overlay-bg: rgba(0, 0, 0, 0.9);
-            --footer-bg: #1a1a2e;
-            --footer-text-color: #e0e0e0;
+            --paper: #0C1A2A;
+            --surface: #14283D;
+            --ink: #E6EDF5;
+            --ink-soft: #9FB2C6;
+            --line: rgba(230, 237, 245, 0.18);
+            --c-sys: #3DD6A0;
+            --c-web: #6C9BFF;
+            --c-ops: #FF7AA2;
+            --link: #8FB2FF;
         }
 
-        /* General Body Styles */
-        html {
-            scroll-behavior: smooth;
-        }
+        /* ---------- Base ---------- */
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 24px; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
-            /* Disable text selection and change cursor */
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Standard syntax */
-            cursor: default; /* Default cursor for entire body */
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--font-text);
+            font-size: 1.08rem;
+            line-height: 1.7;
+            transition: background-color .3s ease, color .3s ease;
+            -webkit-user-select: none;
+            user-select: none;
         }
+        body.no-scroll { overflow: hidden; }
+        #contact, #contact * { -webkit-user-select: text; user-select: text; }
 
-        body.no-scroll {
-            overflow: hidden; /* Prevent scrolling when mobile menu is open */
+        a { color: var(--link); text-underline-offset: 3px; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+        :focus-visible { outline: 3px solid var(--c-web); outline-offset: 3px; border-radius: 4px; }
+
+        h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.1; margin: 0; letter-spacing: -0.02em; }
+
+        .skip-link {
+            position: absolute; left: -999px; top: 8px; z-index: 5000;
+            background: var(--ink); color: var(--paper); padding: .6rem 1rem; border-radius: 6px;
         }
+        .skip-link:focus { left: 8px; }
 
-        /* Disable tap highlight color for all interactive elements */
-        a, button, label, .filter-btn, .view-cert-btn, .view-resume-btn, .theme-switch, .menu-icon {
-            -webkit-tap-highlight-color: transparent;
-            -webkit-touch-callout: none; /* Disable callout on long press */
+        /* ---------- Side rail (desktop) ---------- */
+        .rail {
+            position: fixed; inset: 0 auto 0 0; width: var(--rail);
+            padding: 2rem 1.5rem;
+            display: flex; flex-direction: column; justify-content: space-between;
+            border-right: 1px solid var(--line);
+            background: var(--paper);
+            z-index: 100;
+            transition: background-color .3s ease;
         }
-
-        /* Container */
-        .container {
-            max-width: 1200px; /* Increased from 1100px for more space */
-            margin: auto;
-            overflow: hidden;
-            padding: 0 20px; /* Responsive padding */
+        .brand { font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; letter-spacing: -0.03em; text-decoration: none; color: var(--ink); }
+        .rail nav ul { list-style: none; margin: 2.5rem 0 0; padding: 0; }
+        .rail nav li { margin: 0; }
+        .rail nav a, .mobile-menu a {
+            display: flex; align-items: center; gap: .9rem;
+            padding: .45rem 0;
+            font-family: var(--font-display); font-weight: 600; font-size: 1.02rem;
+            color: var(--ink-soft); text-decoration: none;
+            transition: color .2s ease;
         }
-
-        /* Header & Navigation */
-        header {
-            background: var(--header-bg);
-            color: var(--text-color);
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--header-border);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px var(--box-shadow-light);
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        .rail nav a:hover, .rail nav a.active { color: var(--ink); }
+        /* the light that follows the section you're reading */
+        .led {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: transparent; border: 2px solid var(--line);
+            transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+            flex: none;
         }
+        .rail nav a.active .led { background: var(--c-sys); border-color: var(--c-sys); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c-sys) 25%, transparent); }
 
-        header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap; /* Allow navigation to wrap on smaller screens */
+        .theme-btn {
+            display: inline-flex; align-items: center; gap: .6rem;
+            background: none; border: 2px solid var(--line); color: var(--ink);
+            font-family: var(--font-display); font-weight: 600; font-size: .95rem;
+            padding: .5rem .9rem; border-radius: 999px; cursor: pointer;
+            transition: border-color .2s ease;
         }
+        .theme-btn:hover { border-color: var(--ink); }
+        .theme-btn .swatch { width: 14px; height: 14px; border-radius: 50%; background: var(--ink); }
+        body.dark-theme .theme-btn .swatch { background: var(--c-ai); }
 
-        header h1 {
-            margin: 0;
-            font-size: 1.8rem;
-        }
+        /* ---------- Mobile top bar ---------- */
+        .topbar { display: none; }
+        .mobile-menu { display: none; }
 
-        /* Styles for the main desktop navigation */
-        header nav#mainNav {
-            flex-grow: 1; /* Allow nav to take available space */
-            text-align: center; /* Center nav links if there's space */
-        }
+        main { margin-left: var(--rail); }
+        .wrap { max-width: 880px; padding: 0 clamp(1.25rem, 5vw, 4rem); margin: 0 auto 0 0; }
+        section { padding: clamp(4rem, 9vw, 7rem) 0; }
+        section + section { border-top: 1px solid var(--line); }
 
-        header nav#mainNav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center; /* Center nav items within the nav area */
-            flex-wrap: nowrap; /* Prevent wrapping on desktop */
-        }
-
-        header nav#mainNav ul li {
-            margin: 0 10px; /* Adjust margin for desktop nav items */
-        }
-
-        header nav ul li a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-            cursor: pointer; /* Restore pointer cursor for links */
-        }
-
-        header nav ul li a:hover {
-            color: var(--primary-color);
-        }
-
-        /* Container for right-side controls (theme toggle and hamburger) */
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 20px; /* Space between theme toggle and menu icon */
-        }
-
-        /* Theme Toggle Switch */
-        .theme-switch-wrapper {
-            display: flex;
-            align-items: center;
-            /* Removed margin-left as it's now handled by gap in header-controls */
-        }
-
-        .theme-switch {
-            display: inline-block;
-            height: 24px;
+        h2.title {
+            font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+            padding-left: 1.4rem;
             position: relative;
-            width: 48px;
-            cursor: pointer; /* Ensure the whole label is clickable */
+        }
+        /* a cable stub in front of every section heading */
+        h2.title::before {
+            content: ""; position: absolute; left: 0; top: .18em; bottom: .18em; width: 8px; border-radius: 4px;
+            background: linear-gradient(var(--c-sys) 0 25%, var(--c-ai) 25% 50%, var(--c-web) 50% 75%, var(--c-ops) 75% 100%);
         }
 
-        .theme-switch input {
-            display: none;
+        /* ---------- Hero ---------- */
+        .hero { padding-top: clamp(3.5rem, 8vw, 6rem); }
+        .hero-top { display: flex; gap: 2.5rem; align-items: flex-start; justify-content: space-between; flex-wrap: wrap-reverse; }
+        .hero h1 { font-size: clamp(2.8rem, 8vw, 5.6rem); font-weight: 800; letter-spacing: -0.045em; max-width: 11ch; }
+        .hero .role { font-family: var(--font-display); font-weight: 600; font-size: 1.15rem; color: var(--ink-soft); margin: 1.5rem 0 0; }
+        .hero .summary { max-width: 58ch; margin: 1.25rem 0 0; }
+
+        .badge {
+            margin: 0; width: 170px; flex: none;
+            transform: rotate(2.5deg);
+            border-radius: 20px; overflow: hidden;
+            border: 6px solid var(--c-ai);
+            background: var(--surface);
+            aspect-ratio: 4 / 5;
         }
+        .badge img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        .slider {
-            background-color: #ccc;
-            bottom: 0;
-            cursor: pointer;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            transition: .4s;
-            border-radius: 34px;
+        .cables { list-style: none; margin: 3.5rem 0 0; padding: 0; display: grid; gap: 1.1rem; }
+        .cable { display: flex; align-items: center; gap: 1rem; --c: var(--c-sys); }
+        .cable.ai { --c: var(--c-ai); }
+        .cable.ops { --c: var(--c-ops); }
+        .cable .label { flex: none; width: 11.5rem; font-family: var(--font-display); font-weight: 600; font-size: 1rem; line-height: 1.25; }
+        .cable .wire { flex: 1; position: relative; height: 6px; border-radius: 3px; background: var(--c); transform-origin: left center; animation: draw 1.1s cubic-bezier(.2, .8, .2, 1) both; animation-delay: var(--d, 0s); }
+        .cable .wire::after { content: ""; position: absolute; right: -2px; top: 50%; width: 18px; height: 18px; transform: translateY(-50%); border-radius: 5px; background: var(--c); box-shadow: inset 0 0 0 4px var(--paper); }
+        .cable .detail { flex: none; width: 15rem; font-size: .92rem; line-height: 1.4; color: var(--ink-soft); }
+        @keyframes draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+        /* ---------- About ---------- */
+        .about p { max-width: 62ch; margin: 0 0 1.25rem; }
+        .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem 3rem; margin-top: 2.5rem; }
+        .facts h3 { font-size: 1.15rem; margin-bottom: .5rem; }
+        .facts p { margin: 0; color: var(--ink-soft); font-size: 1rem; line-height: 1.55; }
+
+        /* ---------- Skills ---------- */
+        .skill-group { margin-bottom: 2.25rem; }
+        .skill-group h3 { font-size: 1.2rem; margin-bottom: .9rem; }
+        .ports { display: flex; flex-wrap: wrap; gap: .6rem; }
+        .port {
+            --c: var(--c-sys);
+            background: var(--surface); border-radius: 6px;
+            padding: .4rem .9rem .4rem .8rem;
+            border-left: 6px solid var(--c);
+            font-family: var(--font-display); font-weight: 600; font-size: .98rem;
+            transition: transform .2s ease;
         }
+        .port:hover { transform: translateY(-3px); }
+        .skill-group.ai { --g: var(--c-ai); }
+        .skill-group.web { --g: var(--c-web); }
+        .skill-group.sys { --g: var(--c-sys); }
+        .skill-group.ops { --g: var(--c-ops); }
+        .skill-group .port { --c: var(--g); }
 
-        /* The moving knob */
-        .slider:before {
-            background-color: #fff;
-            bottom: 4px;
-            content: "";
-            height: 16px;
-            left: 4px;
-            position: absolute;
-            transition: .4s;
-            width: 16px;
-            border-radius: 50%;
-            z-index: 2; /* Ensure knob is above icons */
+        /* ---------- Experience ---------- */
+        .trace { position: relative; padding-left: 2rem; }
+        .trace::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 3px; background: var(--line); border-radius: 2px; }
+        .job { position: relative; margin-bottom: 3.5rem; }
+        .job:last-child { margin-bottom: 0; }
+        .job::before {
+            content: ""; position: absolute; left: -2rem; top: .45rem; width: 17px; height: 17px;
+            border-radius: 50%; background: var(--paper); border: 4px solid var(--c-sys);
         }
+        .job.now::before { background: var(--c-sys); box-shadow: 0 0 0 5px color-mix(in srgb, var(--c-sys) 25%, transparent); }
+        .job h3 { font-size: 1.6rem; font-weight: 800; }
+        .job .where { font-family: var(--font-display); font-weight: 600; margin: .35rem 0 0; }
+        .job .when { margin: 0; color: var(--ink-soft); font-size: .98rem; }
+        .job .about-co { font-style: italic; margin: .8rem 0 0; max-width: 60ch; }
+        .job ul { margin: 1rem 0 0; padding-left: 1.2rem; }
+        .job li { margin-bottom: .45rem; max-width: 66ch; }
 
-        /* Slider state when checked (dark mode) */
-        input:checked + .slider {
-            background-color: var(--primary-color);
+        details.work { margin-top: 1rem; border-top: 1px solid var(--line); }
+        details.work summary {
+            cursor: pointer; list-style: none; padding: 1rem 0;
+            font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; line-height: 1.3;
+            display: flex; gap: .8rem; align-items: baseline; justify-content: space-between;
         }
+        details.work summary::-webkit-details-marker { display: none; }
+        details.work summary::after { content: "+"; font-size: 1.6rem; line-height: 1; color: var(--ink-soft); transition: transform .25s ease; flex: none; }
+        details.work[open] summary::after { transform: rotate(45deg); }
+        details.work .body { padding-bottom: 1.25rem; }
+        .stack { margin: 1rem 0 0; font-size: .96rem; color: var(--ink-soft); }
+        .stack b { font-family: var(--font-display); color: var(--ink); }
 
-        input:checked + .slider:before {
-            transform: translateX(24px);
-        }
-
-        /* Icon styling */
-        .slider .icon {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1rem; /* Size of the emoji icon */
-            transition: opacity 0.3s ease, color 0.3s ease;
-            z-index: 1; /* Ensure icons are above the slider background */
-            line-height: 1; /* Adjust line height for better vertical centering */
-        }
-
-        .slider .sun-icon {
-            left: 6px; /* Position on the left side of the track */
-            opacity: 0; /* Hidden initially (light mode knob on left) */
-            color: #f7a000; /* Sun color */
-        }
-
-        .slider .moon-icon {
-            right: 6px; /* Position on the right side of the track */
-            opacity: 1; /* Visible initially (light mode knob on left, moon is opposite) */
-            color: #e0e0e0; /* Moon color */
-        }
-
-        /* When checkbox is checked (dark mode) */
-        input:checked + .slider .sun-icon {
-            opacity: 1; /* Show sun in dark mode (sun is opposite to dark mode knob) */
-        }
-
-        input:checked + .slider .moon-icon {
-            opacity: 0; /* Hide moon in dark mode */
-        }
-
-        /* Hamburger Menu Icon */
-        .menu-icon {
-            display: none; /* Hidden by default on desktop */
-            cursor: pointer;
-            padding: 10px;
-            z-index: 1001; /* Above header and nav */
-        }
-
-        .menu-icon .bar {
-            width: 25px;
-            height: 3px;
-            background-color: var(--text-color);
-            margin: 5px 0;
-            transition: 0.4s;
-        }
-
-        /* Hamburger icon animation (optional) */
-        .menu-icon.open .bar:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-
-        .menu-icon.open .bar:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-icon.open .bar:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--header-bg); /* Use a theme variable */
-            z-index: 999;
-            overflow-y: auto;
-            transition: transform 0.3s ease-in-out;
-            transform: translateX(100%); /* Start off-screen */
-        }
-
-        .mobile-menu.active {
-            transform: translateX(0); /* Slide in */
-            display: block; /* Show when active */
-        }
-
-        .mobile-menu ul {
-            list-style: none;
-            padding: 80px 20px 20px 20px; /* Adjust padding for header space */
-            margin: 0;
-            text-align: center;
-        }
-
-        .mobile-menu ul li {
-            margin: 20px 0;
-        }
-
-        .mobile-menu ul li a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-size: 1.5rem;
-            display: block; /* Make links full width for easier tapping */
-            padding: 10px 0;
-            cursor: pointer; /* Restore pointer cursor for links */
-        }
-
-
-        /* Hero Section */
-        .hero {
-            background: var(--primary-color);
-            color: #333; /* Kept dark for consistent contrast on skyblue background */
-            padding: 4rem 0; /* Consistent padding */
-            text-align: center;
-            display: flex;
-            flex-direction: column; /* Arrange content vertically */
-            align-items: center; /* Center content horizontally */
-        }
-
-        .hero h2 {
-            font-size: clamp(2rem, 6vw, 2.8rem); /* Responsive font size */
-            margin: 0 0 10px 0;
-        }
-
-        .hero p {
-            font-size: clamp(1rem, 2.5vw, 1.2rem); /* Responsive font size */
-            margin-bottom: 20px;
-        }
-
-        .hero .social-links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: bold;
-        }
-
-        /* Profile Image Container */
-        .profile-image-container {
-            margin-bottom: 2rem; /* Space between image and text */
-            width: 128.7px; /* Fixed width for the image container */
-            height: 158px; /* Fixed height for the image container */
-            border-radius: 30%; /* Make it circular */
-            overflow: hidden; /* Hide overflow for circular shape */
-            border: 10px solid #fff; /* White border */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
-            display: flex; /* Use flexbox to center content */
-            justify-content: center;
-            align-items: center;
-            background-color: transparent; /* No background for loading */
-        }
-
-        .profile-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit:scale-down; /* Cover the container without distortion */
-            display: block;
-        }
-
-
-        /* Sections */
-        section {
-            padding: 4rem 0; /* Consistent padding */
-            border-bottom: 1px solid var(--border-color);
-            transition: border-color 0.3s ease;
-        }
-
-        section:last-of-type {
-            border-bottom: none;
-        }
-
-        h3.section-title {
-            text-align: center;
-            font-size: clamp(1.8rem, 5vw, 2rem); /* Responsive font size */
-            margin-bottom: 4rem; /* Increased margin to prevent cut-off */
-            position: relative;
-            transition: color 0.3s ease;
-            cursor: default; /* Ensure default cursor for titles */
-        }
-
-        /* Reactive title color on hover */
-        h3.section-title:hover {
-            color: var(--secondary-color);
-        }
-
-        h3.section-title::after {
-            content: '';
-            width: 60px;
-            height: 4px;
-            background: var(--primary-color);
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            transition: width 0.3s ease, background-color 0.3s ease;
-        }
-
-        /* Line expansion on hover */
-        h3.section-title:hover::after {
-            width: 100px;
-            background-color: var(--secondary-color);
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.5rem; /* Increased from 1rem for better spacing */
-            margin-top: 2rem; /* Added space on top */
-            margin-bottom: 2rem; /* Added space on bottom */
-        }
-
-        .skill {
-            background: var(--card-bg);
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            box-shadow: 0 2px 5px var(--box-shadow-medium);
-            font-weight: bold;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
-            cursor: default; /* Ensure default cursor for skills */
-        }
-
-        .skill:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px var(--box-shadow-strong);
-        }
-
-        /* Experience Section */
-        .timeline {
-            max-width: 800px;
-            margin: auto;
-        }
-
-        .timeline-item {
-            background: var(--card-bg);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px var(--box-shadow-medium);
-            border-left: 5px solid var(--primary-color);
-            transition: transform 0.3s, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-            cursor: default; /* Ensure default cursor for timeline items */
-        }
-
-        .timeline-item:hover {
-            transform: scale(1.02);
-        }
-
-        .timeline-item h4 {
-            font-size: 1.4rem;
-            color: var(--primary-color);
-            margin-top: 0;
-        }
-
-        .timeline-item .date,
-        .timeline-item .company {
-            color: var(--text-color); /* Ensures good contrast in both themes */
-            margin-bottom: 10px;
-        }
-        
-        .timeline-item ul {
-            padding-left: 20px; /* Default padding for bullet points */
-        }
-        
-        .timeline-item li {
-            margin-bottom: 5px; /* Space between list items */
-        }
-
-
-        /* Project Filtering */
-        .project-filters {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
+        /* ---------- Projects ---------- */
+        .filters { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 2rem; }
         .filter-btn {
-            background: var(--button-filter-bg);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            margin: 0 5px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s, color 0.3s;
-            color: var(--text-color); /* Ensures filter button text respects theme */
+            --c: var(--ink);
+            font-family: var(--font-display); font-weight: 600; font-size: .98rem;
+            background: transparent; color: var(--ink);
+            border: 2px solid var(--line); border-radius: 999px;
+            padding: .45rem 1.1rem; cursor: pointer;
+            transition: background-color .2s ease, border-color .2s ease, color .2s ease;
         }
+        .filter-btn[data-filter="ai"] { --c: var(--c-ai); }
+        .filter-btn[data-filter="iot"] { --c: var(--c-sys); }
+        .filter-btn[data-filter="web"] { --c: var(--c-web); }
+        .filter-btn:hover { border-color: var(--c); }
+        .filter-btn.active { background: var(--c); border-color: var(--c); color: #0F2338; }
+        .filter-btn[data-filter="web"].active { color: #fff; }
+        body.dark-theme .filter-btn[data-filter="web"].active { color: #0C1A2A; }
+        .filter-btn[data-filter="all"].active { color: var(--paper); }
 
-        .filter-btn:hover {
-            background-color: var(--button-filter-hover-bg);
-        }
-
-        .filter-btn.active {
-            background-color: var(--primary-color);
-            color: #fff;
-        }
-
-        /* Projects Grid */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.4rem; }
         .project-card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px var(--box-shadow-medium);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s ease, color 0.3s ease;
-            cursor: default; /* Ensure default cursor for project cards */
+            background: var(--surface); border-radius: 10px;
+            display: flex; flex-direction: column; overflow: hidden;
+            transition: transform .25s ease;
         }
+        .project-card:hover { transform: translateY(-4px); }
+        .project-card.featured { grid-column: 1 / -1; }
+        /* the stripe at the top shows which domains a project touches */
+        .stripe { display: flex; height: 8px; }
+        .stripe i { flex: 1; }
+        .stripe .ai { background: var(--c-ai); }
+        .stripe .iot { background: var(--c-sys); }
+        .stripe .web { background: var(--c-web); }
+        .project-body { padding: 1.4rem 1.5rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
+        .project-body h3 { font-size: 1.35rem; font-weight: 800; }
+        .project-card.featured h3 { font-size: 1.7rem; }
+        .project-body p { margin: .8rem 0 1.2rem; font-size: 1rem; line-height: 1.6; flex: 1; }
+        .project-body a { font-family: var(--font-display); font-weight: 600; align-self: flex-start; }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px var(--box-shadow-strong);
-        }
-
-        .project-card-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex; /* Make it a flex container */
-            flex-direction: column; /* Stack children vertically */
-            justify-content: space-between; /* Pushes the link to the bottom */
-        }
-
-        .project-card-content p {
-            flex-grow: 1; /* Allow description to take up available space, pushing link down */
-            margin-bottom: 15px; /* Add some space above the link */
-        }
-
-        .project-card .project-link {
-            display: inline-block;
-            margin-top: auto; /* Pushes the link to the bottom */
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: bold;
-            cursor: pointer; /* Restore pointer cursor for links */
-            align-self: flex-start; /* Align the link to the start (left) within the flex column */
-        }
-
-        .project-card .project-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Certifications */
-        .cert-entry {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            margin: auto auto 1.5rem auto;
-            max-width: 800px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px var(--box-shadow-medium);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
-            cursor: default; /* Ensure default cursor for cert entries */
-        }
-        
-        .cert-entry:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px var(--box-shadow-strong);
-        }
-
-
+        /* ---------- Education + certificates ---------- */
+        .rows { list-style: none; padding: 0; margin: 0; }
+        .row { display: flex; gap: 1.5rem; justify-content: space-between; align-items: center; padding: 1.2rem 0; border-top: 1px solid var(--line); }
+        .row:last-child { border-bottom: 1px solid var(--line); }
+        .row h3 { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em; }
+        .row p { margin: .25rem 0 0; color: var(--ink-soft); font-size: .98rem; line-height: 1.5; }
+        .row .meta { text-align: right; flex: none; color: var(--ink-soft); font-size: .98rem; }
         .view-cert-btn {
-            background: var(--primary-color);
-            color: #333; /* Changed to a dark color for contrast */
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+            flex: none; font-family: var(--font-display); font-weight: 600; font-size: .95rem;
+            background: transparent; color: var(--ink); border: 2px solid var(--ink);
+            border-radius: 999px; padding: .4rem 1.1rem; cursor: pointer;
+            transition: background-color .2s ease, color .2s ease;
         }
+        .view-cert-btn:hover { background: var(--ink); color: var(--paper); }
+        .lead { max-width: 58ch; margin: 0 0 2rem; }
 
-        .view-cert-btn:hover {
-            background-color: var(--secondary-color);
+        /* ---------- Contact ---------- */
+        .contact-mail {
+            display: inline-block; font-family: var(--font-display); font-weight: 800;
+            font-size: clamp(1.5rem, 5vw, 2.8rem); letter-spacing: -0.03em; line-height: 1.15;
+            word-break: break-word; margin: .5rem 0 2rem;
         }
+        .contact-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+        .contact-list b { font-family: var(--font-display); display: inline-block; min-width: 6.5rem; }
 
-        /* Certificate Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: var(--modal-overlay-bg);
-            justify-content: center;
-            align-items: center;
-        }
+        footer { margin-left: var(--rail); border-top: 1px solid var(--line); padding: 1.75rem 0 6rem; color: var(--ink-soft); font-size: .95rem; }
 
-        /* New styling for the iframe inside the modal */
-        .modal-content-iframe {
-            margin: auto;
-            display: block;
-            max-width: 80%; /* Adjust as needed */
-            max-height: 80%; /* Adjust as needed */
-            width: 100%; /* Make iframe take full width of its container */
-            height: 100%; /* Make iframe take full height of its container */
-            border: none; /* Remove default iframe border */
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 25px;
-            right: 45px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--footer-bg);
-            color: var(--footer-text-color);
-            text-align: center;
-            padding: 1.5rem 0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            cursor: default; /* Ensure default cursor for footer */
-        }
-
-        /* Languages and Interests Section Specifics */
-        .languages-interests-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 3rem;
-            max-width: 800px;
-            margin: auto;
-            margin-bottom: 1%;
-        }
-
-        .language-entry, .interest-entry {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px var(--box-shadow-medium);
-            text-align: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
-            cursor: default; /* Ensure default cursor for these entries */
-        }
-
-        .language-entry:hover, .interest-entry:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px var(--box-shadow-strong);
-        }
-
-        .language-entry h4, .interest-entry h4 {
-            color: var(--primary-color);
-            margin-top: 0;
-            font-size: 1.2rem;
-        }
-
-        .language-entry p, .interest-entry p {
-            color: var(--text-color); /* Ensures good contrast in both themes */
-            margin-bottom: 0;
-            font-size: 1rem;        
-        }
-
-        /* Contact Section specific styling for links */
-        #contact a {
-            color: var(--primary-color); /* Use the primary accent color for contrast */
-            text-decoration: underline; /* Emphasize it's a link */
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        #contact a:hover {
-            color: var(--secondary-color); /* Add a hover effect */
-        }
-          /* Floating Resume Button Styles */
-        .floating-resume-button-wrapper {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            /* The button itself already has styling, just need to position the wrapper */
-        }
+        /* ---------- Floating resume + modal ---------- */
         .view-resume-btn {
-            background: var(--primary-color);
-            color: #333; /* Dark text for contrast */
-            border: 2px solid black; 
-            padding: 0.8rem 1.5rem;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.3s ease;
-           /* margin-top: 20px; Space from other contact info */
+            position: fixed; right: 20px; bottom: 20px; z-index: 900;
+            font-family: var(--font-display); font-weight: 800; font-size: 1rem;
+            background: var(--c-ai); color: #0F2338;
+            border: 3px solid #0F2338; border-radius: 999px; padding: .7rem 1.4rem; cursor: pointer;
+            transition: transform .2s ease;
+        }
+        .view-resume-btn:hover { transform: translateY(-3px) rotate(-1.5deg); }
+
+        .modal { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(8, 18, 30, 0.88); justify-content: center; align-items: center; padding: 3.5rem 1rem 1rem; }
+        .modal.open { display: flex; }
+        .modal-frame { width: min(1000px, 100%); height: 100%; border: 0; background: #fff; border-radius: 8px; }
+        .close-modal {
+            position: absolute; top: 10px; right: 16px; width: 44px; height: 44px;
+            background: none; border: 0; color: #fff; font-size: 2.4rem; line-height: 1; cursor: pointer;
         }
 
-        .view-resume-btn:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-color: var(--secondary-color); /* Make border match hover background */
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            :root { --rail: 0px; }
+            .rail { display: none; }
+            main, footer { margin-left: 0; }
+            .wrap { margin: 0 auto; }
+            .topbar {
+                display: flex; align-items: center; justify-content: space-between;
+                position: sticky; top: 0; z-index: 1000;
+                padding: .8rem 1.25rem; background: var(--paper); border-bottom: 1px solid var(--line);
+            }
+            .topbar .actions { display: flex; align-items: center; gap: .6rem; }
+            .menu-btn { background: none; border: 2px solid var(--line); color: var(--ink); font-family: var(--font-display); font-weight: 600; font-size: .95rem; border-radius: 999px; padding: .5rem 1rem; cursor: pointer; }
+            .mobile-menu { position: fixed; inset: 0; z-index: 999; background: var(--paper); padding: 5.5rem 1.75rem 2rem; overflow-y: auto; transform: translateX(100%); transition: transform .3s ease; display: block; visibility: hidden; }
+            .mobile-menu.active { transform: translateX(0); visibility: visible; }
+            .mobile-menu ul { list-style: none; margin: 0; padding: 0; }
+            .mobile-menu a { font-size: 1.7rem; padding: .7rem 0; color: var(--ink); }
+            html { scroll-padding-top: 70px; }
+            .cable { flex-wrap: wrap; row-gap: .4rem; }
+            .cable .label { width: auto; }
+            .cable .wire { order: 2; flex-basis: 100%; }
+            .cable .detail { order: 3; width: 100%; }
+            .badge { width: 120px; }
         }
 
-        /* Media Queries for Responsiveness */
-        @media (max-width: 768px) {
-            header nav#mainNav {
-                display: none; /* Hide desktop nav */
-            }
-            .menu-icon {
-                display: block; /* Show hamburger icon */
-            }
-            header .container {
-                justify-content: space-between; /* Ensure logo and header controls are separate */
-                align-items: center; /* Vertically align items */
-            }
-            /* theme-switch-wrapper's margin handled by header-controls gap */
-
-            /* Adjust project grid min width for smaller phones */
-            .project-grid {
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjusted min-width */
-            }
-
-            /* Further refine padding for very small screens */
-            .container {
-                padding: 0 15px; /* Slightly less padding on very small screens */
-            }
-
-            section {
-                padding: 3rem 0; /* Slightly less vertical padding on sections */
-            }
-
-            .hero {
-                padding: 3rem 0;
-            }
-
-            .hero h2 {
-                font-size: clamp(1.8rem, 5vw, 2.5rem);
-            }
-
-            .hero p {
-                font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            }
-
-            h3.section-title {
-                font-size: clamp(1.6rem, 5vw, 1.8rem);
-                margin-bottom: 3rem; /* Adjust margin for mobile */
-            }
-
-            .timeline-item {
-                padding: 1.5rem;
-            }
-
-            /* Adjust bullet point padding for smaller screens */
-            .timeline-item ul {
-                padding-left: 15px; /* Reduced padding for mobile */
-            }
-
-            .project-card-content {
-                padding: 1rem;
-            }
-
-            .cert-entry {
-                flex-direction: column; /* Stack elements vertically */
-                align-items: flex-start; /* Align items to the start */
-                padding: 1rem;
-                margin-bottom: 1rem;
-            }
-
-            .cert-entry button {
-                margin-top: 15px; /* Add space between text and button */
-                width: 100%; /* Make button full width */
-            }
-
-            .languages-interests-grid {
-                grid-template-columns: 1fr; /* Single column layout on mobile */
-                gap: 1.5rem;
-            }
-            /* Adjust floating resume button position for smaller screens */
-            .floating-resume-button-wrapper {
-                bottom: 15px;
-                right: 15px;
-            }
+        @media (max-width: 560px) {
+            .row { flex-direction: column; align-items: flex-start; gap: .75rem; }
+            .row .meta { text-align: left; }
+            .view-resume-btn { right: 12px; bottom: 12px; padding: .6rem 1.1rem; }
         }
 
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.5rem;
-            }
-            .filter-btn {
-                padding: 0.6rem 1rem;
-                margin: 0 3px;
-                font-size: 0.9rem;
-            }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
         }
     </style>
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <header>
-        <div class="container">
-            <h1>Venu R</h1>
-            <nav id="mainNav">
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#education">Education</a></li>
-                    <li><a href="#certifications">Certifications</a></li>
-                    <li><a href="#languages-interests">Languages & Interests</a></li>
-                    <li><a href="#contact">Contact</a></li>
+    <!-- Desktop side rail -->
+    <aside class="rail">
+        <div>
+            <a class="brand" href="#top">Venu R</a>
+            <nav aria-label="Sections">
+                <ul id="railNav">
+                    <li><a href="#about"><span class="led"></span>About</a></li>
+                    <li><a href="#skills"><span class="led"></span>Skills</a></li>
+                    <li><a href="#experience"><span class="led"></span>Experience</a></li>
+                    <li><a href="#projects"><span class="led"></span>Projects</a></li>
+                    <li><a href="#education"><span class="led"></span>Education</a></li>
+                    <li><a href="#certifications"><span class="led"></span>Certifications</a></li>
+                    <li><a href="#contact"><span class="led"></span>Contact</a></li>
                 </ul>
             </nav>
-            <div class="header-controls">
-                <div class="theme-switch-wrapper">
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox" />
-                        <div class="slider round">
-                            <span class="icon sun-icon">☀️</span>
-                            <span class="icon moon-icon">🌙</span>
-                        </div>
-                    </label>
-                </div>
-                <div class="menu-icon" id="menuToggle">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-            </div>
+        </div>
+        <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false">
+            <span class="swatch"></span><span class="theme-label">Dark mode</span>
+        </button>
+    </aside>
+
+    <!-- Mobile top bar -->
+    <header class="topbar">
+        <a class="brand" href="#top">Venu R</a>
+        <div class="actions">
+            <button class="theme-btn" type="button" data-theme-toggle aria-pressed="false" aria-label="Toggle dark mode">
+                <span class="swatch"></span><span class="theme-label">Dark</span>
+            </button>
+            <button class="menu-btn" id="menuToggle" type="button" aria-expanded="false" aria-controls="mobileMenu">Menu</button>
         </div>
     </header>
-
-    <!-- Mobile Menu Structure -->
-    <nav class="mobile-menu" id="mobileMenu">
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Sections">
         <ul>
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
@@ -842,374 +381,483 @@
             <li><a href="#projects">Projects</a></li>
             <li><a href="#education">Education</a></li>
             <li><a href="#certifications">Certifications</a></li>
-            <li><a href="#languages-interests">Languages & Interests</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero" id="top">
+            <div class="wrap">
+                <div class="hero-top">
+                    <div>
+                        <h1>I wire AI into real infrastructure.</h1>
+                    </div>
+                    <figure class="badge">
+                        <img src="./VenuR.jpeg" alt="Portrait of Venu R" onerror="this.parentElement.style.display='none'">
+                    </figure>
+                </div>
+                <p class="role">Venu R, systems engineer at the IITM Hostel Management Trust, Chennai</p>
+                <p class="summary">A versatile Computer Science graduate with experience across software development, system administration, networking and AI-driven applications. I adapt to whatever the problem needs and ship practical solutions.</p>
 
-    <section class="hero">
-        <div class="profile-image-container" id="profileImageContainer">
-            <!-- Image will be loaded from the local folder -->
-            <img id="profileImage" src="./VenuR.jpeg" alt="Venu R Profile Picture">
-        </div>
-        <div class="container">
-            <h2>Software & System Engineer | AI Enthusiast | Full Stack Developer</h2>
-            <p>A versatile Computer Science graduate with experience across software development, system administration, networking, and AI-driven applications. Adept at adapting to diverse technical challenges and delivering practical solutions. Committed to continuous learning and contributing to innovative projects.</p>
-        </div>
-    </section>
-
-    <section id="about">
-        <div class="container" style="text-align: center;">
-            <h3 class="section-title">About Me</h3>
-            <p style="max-width: 800px; margin: auto;">
-                I’m Venu R, a Computer Science graduate with a strong background in software development, system administration, networking, and web applications. I’m passionate about building impactful tech solutions, with projects like VisionGrid (AI-powered camera streaming) and a Transformer-based Logical Inference System. Certified in RHCSA, Python with Data Science (NPTEL), and CCNAv7, I’m committed to continuous learning and thrive in dynamic, innovation-driven environments.
-            </p>
-        </div>
-    </section>
-
-    <section id="skills">
-        <div class="container">
-            <h3 class="section-title">Skills</h3>
-            <div class="skills-grid">
-                <div class="skill">Networking</div>
-                <div class="skill">Linux System Administration</div>
-                <div class="skill">Python</div>
-                <div class="skill">MQTT</div>
-                <div class="skill">React</div>
-                <div class="skill">AI/ML</div>
-                <div class="skill">Computer Vision</div>
-                <div class="skill">IoT</div>
-                <div class="skill">C Programming</div>
-                <div class="skill">Shell Script</div>
+                <ul class="cables" aria-label="What I work on">
+                    <li class="cable" style="--d:.2s">
+                        <span class="label">Systems and networking</span>
+                        <span class="wire" aria-hidden="true"></span>
+                        <span class="detail">Linux, MQTT, biometric terminals, IoT telemetry</span>
+                    </li>
+                    <li class="cable ai" style="--d:.45s">
+                        <span class="label">AI and computer vision</span>
+                        <span class="wire" aria-hidden="true"></span>
+                        <span class="detail">LLM fine-tuning, RAG, YOLO, anomaly detection</span>
+                    </li>
+                    <li class="cable ops" style="--d:.7s">
+                        <span class="label">DevOps</span>
+                        <span class="wire" aria-hidden="true"></span>
+                        <span class="detail">Docker, Kubernetes, Terraform, AWS, CI/CD</span>
+                    </li>
+                </ul>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="experience">
-        <div class="container">
-            <h3 class="section-title">Work Experience</h3>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h4>Computer Vision Intern</h4>
-                    <p style="font-weight: bold;"class="company">YOCO Labs, Chennai</p>
-                    <p class="date">02/2024 - 05/2024</p>
-                    <p style="font-weight: bold;"><em>An AI based Video Analytics Software Company based in Chennai, India and founded in 2021.</em></p>
-                    <ul>
-                        <li>Developed a web application using React and Python which can stream "n" number of cameras and can provide inference using YOLOV8 model.</li>
-                        <li>Trained custom AI models for specific use cases.</li>
-                        <li>Fine-tuned machine learning algorithms.</li>
-                        <li>Optimized IP camera streams in the local network.</li>
-                        <li>Classified and annotated large datasets.</li>
-                        <li>Tested inference in real-world scenarios.</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h4>Server Administrator Intern</h4>
-                    <p style="font-weight: bold;"class="company">SPR Systems, Chennai</p>
-                    <p class="date">06/2024 - 03/2025</p>
-                    <p style="font-weight: bold;"><em>A private IT and Network Consultancy Firm based in Chennai, India.</em></p>
-                    <ul>
-                        <li>Maintained a Debian server for the client.</li>
-                        <li>Enabled HTTPS protection for the website.</li>
-                        <li>Troubleshoot and created cronjobs for automatic SSL certificate renewal.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
+        <!-- About -->
+        <section id="about" class="about">
+            <div class="wrap">
+                <h2 class="title">About me</h2>
+                <p>I'm Venu R, a systems engineer at the IITM Hostel Management Trust. I build LLM-powered knowledge systems (LoRA/QLoRA fine-tuning with RAG), behavioral anomaly detection pipelines, and IoT biometric access control across several hostels.</p>
+                <p>My background spans software development, Linux administration, networking, computer vision and DevOps. Side projects like Repo-Architect, VisionGrid and a Transformer-based logical inference system come from the same habit: pick something hard, build it end to end.</p>
+                <p>I hold Red Hat RHCSA and Containers &amp; Kubernetes credentials, Cisco CCNAv7, and an NPTEL certificate in Python for Data Science.</p>
 
-    <section id="projects">
-        <div class="container">
-            <h3 class="section-title">Projects</h3>
-            <div class="project-filters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="ai">AI / ML</button>
-                <button class="filter-btn" data-filter="iot">IoT</button>
-                <button class="filter-btn" data-filter="web">Full Stack & Web</button>
-            </div>
-            <div class="project-grid">
-                <div class="project-card" data-domain="ai web">
-                    <div class="project-card-content">
-                        <h4 style="font-size:1.5em; ">VisionGrid</h4>
-                        <p class="project-description">A comprehensive web application for real-time IP camera streaming and management, utilizing YOLO-based inference for object detection. It supports ROI drawing on video streams, with backend integration for advanced detection and analytics, optimized for dynamic environments. The app is built with React and Flask, ensuring seamless user experience and efficient video processing.</p>
-                        <a href="https://github.com/VenuR0071/VisionGrid" class="project-link">View on GitHub &rarr;</a>
+                <div class="facts">
+                    <div>
+                        <h3>Languages</h3>
+                        <p>Tamil, full professional proficiency<br>English, full professional proficiency</p>
                     </div>
-                </div>
-                <div class="project-card" data-domain="ai">
-                    <div class="project-card-content">
-                        <h4 style="font-size:1.5em; ">Transformer-based Logical Inference System</h4>
-                        <p class="project-description">Developed a framework to improve deductive reasoning using LogiTorch to train a T5-based soft reasoning transformer model, integrated with BERT for MCQ generation, enhancing logical conclusions.</p>
-                        <a href="https://github.com/VenuR0071/Transformer-model-based-logical-inference-system" class="project-link">View on GitHub &rarr;</a>
-                    </div>
-                </div>
-                <div class="project-card" data-domain="iot ai web">
-                    <div class="project-card-content">
-                        <h4 style="font-size:1.5em; ">BMI Digital Signage Kiosk</h4>
-                        <p class="project-description">The BMI kiosk uses ESP32 microcontrollers with load cells and ultrasonic sensors for weight and height, communicating via MQTT to a Raspberry Pi. It features facial recognition with OpenCV/DLIB, voice input via Google Speech API, and a Python backend with MongoDB. Digital signage is powered by a VPS-hosted content system.</p>
-                        <a href="https://github.com/VenuR0071/BMI-Digital-signage-Kiosk" class="project-link">View on GitHub &rarr;</a>
-                    </div>
-                </div>
-                <div class="project-card" data-domain="iot">
-                    <div class="project-card-content">
-                        <h4 style="font-size:1.5em;">Low Bandwidth MQTT Tracking System</h4>
-                        <p class="project-description">A low-bandwidth tracking system uses an ESP32 with GPS, sending data via MQTT over a VPN to a broker. A mobile app subscribes to the broker for real-time location updates, ensuring secure, efficient tracking.</p>
-                        <a href="https://github.com/VenuR0071/Low-bandwidth-tracking-system-using-MQTT" class="project-link">View on GitHub &rarr;</a>
-                    </div>
-                </div>
-                <div class="project-card" data-domain="ai web">
-                    <div class="project-card-content">
-                        <h4 style="font-size:1.5em;">Traveling Companion App using ChatGPT</h4>
-                        <p class="project-description">A React Native app using ChatGPT to offer real-time assistance and personalized travel recommendations for users during their travels. It leverages AI to provide guidance, answer queries, and enhance the travel experience.</p>
-                        <a href="https://github.com/VenuR0071/Traveling-companion-app-using-CHATGPT" class="project-link">View on GitHub &rarr;</a>
-                    </div>
-                </div>
-                <div class="project-card" data-domain="iot web">
-                    <div class="project-card-content">
-                        <h4 style="font-size:1.5em;">Bluetooth Signal Interception using Chrome</h4>
-                        <p class="project-description">A website using Chrome can capture Bluetooth signals by utilizing the Web Bluetooth API to intercept signals from devices like the MI scale. This allows the website to receive and process data transmitted via Bluetooth from compatible devices.</p>
-                        <a href="https://github.com/VenuR0071/Bluetooth-signal-interception-using-chrome" class="project-link">View on GitHub &rarr;</a>
-                    </div>
-                </div>
-                <div class="project-card" data-domain="web">
-                    <div class="project-card-content">
-                        <h4 style="font-size:1.5em;">Web Hosting using Raspberry Pi</h4>
-                        <p class="project-description">Web hosting on a Raspberry Pi involves running a web server (e.g., Apache or Nginx) and configuring port forwarding on the router to expose the Pi's local IP to a public IP, enabling external access to the hosted website.</p>
-                        <a href="https://github.com/VenuR0071/Web-hosting-using-Raspberry-pi" class="project-link">View on GitHub &rarr;</a>
+                    <div>
+                        <h3>Interests</h3>
+                        <p>Networks, AI, VLSI, quantum computing, piano</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="education">
-        <div class="container">
-            <h3 class="section-title">Education</h3>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h4>B.E. Computer Science</h4>
-                    <p style="font-weight: bold;" class="company">K.C.G College of Technology</p>
-                    <p class="date">2020 - 2024 | CGPA: 8.25</p>
-                </div>
-                <div class="timeline-item">
-                    <h4>HSC</h4>
-                    <p style="font-weight: bold;"class="company">VANA VANI MATRICULATION HIGHER SECONDARY SCHOOL</p>
-                    <p class="date">2019 - 2020 | Percentage: 66</p>
-                </div>
-                <div class="timeline-item">
-                    <h4>SSLC</h4>
-                    <p style="font-weight: bold;"class="company">VANA VANI MATRICULATION HIGHER SECONDARY SCHOOL</p>
-                    <p class="date">2017 - 2018 | Percentage: 82</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        <!-- Skills -->
+        <section id="skills">
+            <div class="wrap">
+                <h2 class="title">Skills</h2>
 
-    <section id="certifications">
-        <div class="container">
-            <h3 class="section-title">Certifications</h3>
-            <p style="text-align: center; max-width: 800px; margin: auto auto 2rem auto;">
-                My certifications are a testament to my dedication to mastering key technologies. You can verify the authenticity of each certificate by clicking on "View Certificate".
-            </p>
-            <div class="cert-entry">
-                <div>
-                    <h4>RED HAT SYSTEM ADMINISTRATION RHEL 7</h4>
-                    <p class="issuer">RedHat | Issued: 07/2017</p>
+                <div class="skill-group sys">
+                    <h3>Systems and networking</h3>
+                    <div class="ports">
+                        <span class="port">Linux system administration</span>
+                        <span class="port">Shell scripting</span>
+                        <span class="port">Networking</span>
+                        <span class="port">MQTT</span>
+                    </div>
                 </div>
-                <button class="view-cert-btn" data-src="./rhcsa.pdf">View Certificate</button>
-            </div>
-            <div class="cert-entry">
-                <div>
-                    <h4>CCNAV7: INTRODUCTION TO NETWORKS</h4>
-                    <p class="issuer">CISCO | Issued: 12/2023</p>
+                <div class="skill-group ai">
+                    <h3>AI and computer vision</h3>
+                    <div class="ports">
+                        <span class="port">Python</span>
+                        <span class="port">AI/ML</span>
+                        <span class="port">Computer vision</span>
+                        <span class="port">YOLO</span>
+                        <span class="port">OpenCV</span>
+                        <span class="port">PyTorch</span>
+                        <span class="port">LLM</span>
+                    </div>
                 </div>
-                <button class="view-cert-btn" data-src="./cisco.pdf">View Certificate</button>
-            </div>
-            <div class="cert-entry">
-                <div>
-                    <h4>FUNDAMENTALS OF CONTAINERS, KUBERNETES AND OPENSHIFT</h4>
-                    <p class="issuer">RedHat | Issued: 02/2025</p>
+                <div class="skill-group web">
+                    <h3>Web and development</h3>
+                    <div class="ports">
+                        <span class="port">React</span>
+                        <span class="port">C programming</span>
+                        <span class="port">Full stack development</span>
+                    </div>
                 </div>
-                <button class="view-cert-btn" data-src="./openshift.pdf">View Certificate</button>
-            </div>
-            <div class="cert-entry">
-                <div>
-                    <h4>PYTHON FOR DATASCIENCE</h4>
-                    <p class="issuer">NPTEL | Issued: 08/2023</p>
+                <div class="skill-group ops">
+                    <h3>DevOps</h3>
+                    <div class="ports">
+                        <span class="port">Docker</span>
+                        <span class="port">Kubernetes</span>
+                        <span class="port">Git CI/CD</span>
+                        <span class="port">Terraform</span>
+                        <span class="port">AWS</span>
+                    </div>
                 </div>
-                <button class="view-cert-btn" data-src="./nptel.pdf">View Certificate</button>
             </div>
-            <div class="cert-entry">
-                <div>
-                    <h4>FULL STACK DEVELOPMENT</h4>
-                    <p class="issuer">Infosys SpringBoard | Issued: 03/2023</p>
-                </div>
-                <button class="view-cert-btn" data-src="./fullstack.pdf">View Certificate</button>
-            </div>
-            <div class="cert-entry">
-                <div>
-                    <h4>PRINCIPLES OF MANAGEMENT</h4>
-                    <p class="issuer">Great Learning | Issued: 08/2023</p>
-                </div>
-                <button class="view-cert-btn" data-src="./management.pdf">View Certificate</button>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="languages-interests">
-        <div class="container">
-            <h3 class="section-title">Languages & Interests</h3>
-            <div class="languages-interests-grid">
-                <div class="language-entry">
-                    <h4>Languages</h4>
-                    <p style="font-weight: bold;">Tamil</p>
-                    <p>Full Professional Proficiency</p>
-                    <p style="font-weight: bold;">English</p> 
-                    <p>Full Professional Proficiency</p>
-                </div>
-                <div class="interest-entry">
-                    <h4>Interests</h4>
-                    <p style="font-weight: bold;">Networks</p>
-                    <p style="font-weight: bold;">AI</p>
-                    <p style="font-weight: bold;">VLSI</p>
-                    <p style="font-weight: bold;">Quantum computing</p>
-                    <p style="font-weight: bold;">Piano</p>
+        <!-- Experience -->
+        <section id="experience">
+            <div class="wrap">
+                <h2 class="title">Work experience</h2>
+                <div class="trace">
+                    <article class="job now">
+                        <h3>Systems Engineer</h3>
+                        <p class="where">IITM Hostel Management Trust, Chennai</p>
+                        <p class="when">Aug 2025 to present</p>
+
+                        <details class="work" open>
+                            <summary>LLM fine-tuning and RAG-based knowledge and workflow automation system</summary>
+                            <div class="body">
+                                <ul>
+                                    <li>Fine-tuned an open-weight LLM using LoRA/QLoRA to improve institutional query understanding and response consistency.</li>
+                                    <li>Implemented a RAG pipeline to retrieve relevant information from documentation.</li>
+                                    <li>Developed a knowledge graph connecting departments, personnel, administrative responsibilities and interdepartmental workflows.</li>
+                                    <li>Implemented context-aware query handling to provide step-by-step guidelines based on student requirements and institutional policies.</li>
+                                    <li>Built an intelligent query-routing mechanism to identify responsible departments and redirect students to the appropriate personnel.</li>
+                                    <li>Integrated source-based responses to ensure answers are grounded in official institutional documents.</li>
+                                </ul>
+                                <p class="stack"><b>Tech stack:</b> Python, Qwen LLM, Hugging Face Transformers, PEFT, LoRA/QLoRA, LangChain, FAISS, FastAPI, PostgreSQL</p>
+                            </div>
+                        </details>
+
+                        <details class="work">
+                            <summary>Behavioral anomaly detection and predictive risk analytics system</summary>
+                            <div class="body">
+                                <ul>
+                                    <li>Designed a data processing pipeline to analyze entry/exit timestamps.</li>
+                                    <li>Implemented feature engineering to identify movement patterns, attendance trends and behavioral deviations.</li>
+                                    <li>Used CatBoost for structured-data prediction and Isolation Forest for unsupervised anomaly detection.</li>
+                                    <li>Integrated Qwen LLM for contextual analysis and automated report generation.</li>
+                                    <li>Designed a scalable architecture using Python, FastAPI and PostgreSQL.</li>
+                                </ul>
+                                <p class="stack"><b>Tech stack:</b> Python, CatBoost, Scikit-learn, Qwen LLM, FastAPI, PostgreSQL</p>
+                            </div>
+                        </details>
+
+                        <details class="work">
+                            <summary>IoT and biometric fleet management</summary>
+                            <div class="body">
+                                <ul>
+                                    <li>Architected a multi-hostel IoT access control and telemetry platform integrating distributed eSSL and ACTAtek biometric terminals via Wiegand protocols and SOAP APIs, achieving real-time log ingestion and automated curfew and unauthorized-entry alerting.</li>
+                                </ul>
+                                <p class="stack"><b>Tech stack:</b> TypeScript, MySQL, Prisma, Java backend</p>
+                            </div>
+                        </details>
+                    </article>
+
+                    <article class="job">
+                        <h3>Server Administrator Intern</h3>
+                        <p class="where">SPR Systems, Chennai</p>
+                        <p class="when">Jun 2024 to Mar 2025</p>
+                        <p class="about-co">A private IT and network consultancy firm based in Chennai, India.</p>
+                        <ul>
+                            <li>Maintained a Debian server for the client.</li>
+                            <li>Enabled HTTPS protection for the website.</li>
+                            <li>Troubleshot and created cron jobs for automatic SSL certificate renewal.</li>
+                        </ul>
+                    </article>
+
+                    <article class="job">
+                        <h3>Computer Vision Intern</h3>
+                        <p class="where">YOCO Labs, Chennai</p>
+                        <p class="when">Feb 2024 to May 2024</p>
+                        <p class="about-co">An AI-based video analytics software company in Chennai, India, founded in 2021.</p>
+                        <ul>
+                            <li>Developed a web application using React and Python to stream multiple IP cameras and provide inference using a YOLOv8 model.</li>
+                            <li>Trained custom AI models for specific use cases and fine-tuned machine learning algorithms.</li>
+                            <li>Optimized IP camera streams within the local network.</li>
+                            <li>Classified and annotated large datasets.</li>
+                            <li>Tested inference in real-world scenarios.</li>
+                        </ul>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contact">
-        <div class="container" style="text-align: center;">
-            <h3 class="section-title">Get In Touch</h3>
-            <p>I'm always open to discussing new projects, creative ideas, or opportunities. Feel free to reach out!</p>
-            <p><strong>Email:</strong> <a href="mailto:venur0071@gmail.com">venur0071@gmail.com</a></p>
-            <p><strong>Phone:</strong> +91 7010270071</p>
-            <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/venu-r-0b721024a"
-                    target="_blank">linkedin.com/in/venu-r-0b721024a</a></p>
-            <p><strong>Location:</strong> Chennai, India</p>
-        </div>
-    </section>
-    <!-- Floating "View My Resume" Button -->
-    <div class="floating-resume-button-wrapper">
-        <button class="view-resume-btn"  data-src="./V7SOFT.pdf">View My Resume</button>
-    </div>
+        <!-- Projects -->
+        <section id="projects">
+            <div class="wrap">
+                <h2 class="title">Projects</h2>
+                <div class="filters" role="group" aria-label="Filter projects">
+                    <button class="filter-btn active" data-filter="all" type="button" aria-pressed="true">All</button>
+                    <button class="filter-btn" data-filter="ai" type="button" aria-pressed="false">AI / ML</button>
+                    <button class="filter-btn" data-filter="iot" type="button" aria-pressed="false">IoT</button>
+                    <button class="filter-btn" data-filter="web" type="button" aria-pressed="false">Full stack and web</button>
+                </div>
+
+                <div class="project-grid">
+                    <article class="project-card featured" data-domain="ai">
+                        <div class="stripe" aria-hidden="true"><i class="ai"></i></div>
+                        <div class="project-body">
+                            <h3>Repo-Architect: autonomous codebase onboarding and architecture assistant</h3>
+                            <p>A self-hosted developer productivity CLI and GenAI pipeline that ingests Git repositories, parses Abstract Syntax Trees (AST) into semantic code blocks, and indexes them into a hybrid retrieval engine (Pinecone + BM25). It serves grounded architectural Q&amp;A and automated commit and PR summaries powered by a PyTorch LoRA fine-tuned LLM.</p>
+                            <a href="https://github.com/VenuR0071/repo-architect">View on GitHub</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-domain="ai web">
+                        <div class="stripe" aria-hidden="true"><i class="ai"></i><i class="web"></i></div>
+                        <div class="project-body">
+                            <h3>VisionGrid</h3>
+                            <p>A web application for real-time IP camera streaming and management, using YOLO-based inference for object detection. It supports ROI drawing on video streams, with backend integration for advanced detection and analytics. Built with React and Flask for efficient video processing.</p>
+                            <a href="https://github.com/VenuR0071/VisionGrid">View on GitHub</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-domain="ai">
+                        <div class="stripe" aria-hidden="true"><i class="ai"></i></div>
+                        <div class="project-body">
+                            <h3>Transformer-based logical inference system</h3>
+                            <p>A framework that improves deductive reasoning, using LogiTorch to train a T5-based soft reasoning transformer model, integrated with BERT for MCQ generation.</p>
+                            <a href="https://github.com/VenuR0071/Transformer-model-based-logical-inference-system">View on GitHub</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-domain="iot ai web">
+                        <div class="stripe" aria-hidden="true"><i class="iot"></i><i class="ai"></i><i class="web"></i></div>
+                        <div class="project-body">
+                            <h3>BMI digital signage kiosk</h3>
+                            <p>ESP32 microcontrollers with load cells and ultrasonic sensors measure weight and height, and send them over MQTT to a Raspberry Pi. It adds facial recognition with OpenCV/dlib, voice input via Google Speech API, and a Python backend with MongoDB. Digital signage runs from a VPS-hosted content system.</p>
+                            <a href="https://github.com/VenuR0071/BMI-Digital-signage-Kiosk">View on GitHub</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-domain="iot">
+                        <div class="stripe" aria-hidden="true"><i class="iot"></i></div>
+                        <div class="project-body">
+                            <h3>Low bandwidth MQTT tracking system</h3>
+                            <p>An ESP32 with GPS sends location data via MQTT over a VPN to a broker. A mobile app subscribes to the broker for real-time location updates, keeping tracking secure and efficient on little bandwidth.</p>
+                            <a href="https://github.com/VenuR0071/Low-bandwidth-tracking-system-using-MQTT">View on GitHub</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-domain="ai web">
+                        <div class="stripe" aria-hidden="true"><i class="ai"></i><i class="web"></i></div>
+                        <div class="project-body">
+                            <h3>Traveling companion app using ChatGPT</h3>
+                            <p>A React Native app that uses the ChatGPT API to offer real-time assistance and personalized travel recommendations, answer questions and guide users during their trips.</p>
+                            <a href="https://github.com/VenuR0071/Traveling-companion-app-using-CHATGPT">View on GitHub</a>
+                        </div>
+                    </article>
+
+                    <article class="project-card" data-domain="web">
+                        <div class="stripe" aria-hidden="true"><i class="web"></i></div>
+                        <div class="project-body">
+                            <h3>Web hosting using Raspberry Pi</h3>
+                            <p>A simple web server hosted on a Raspberry Pi and reachable over the internet. It uses Apache as the web server, No-IP for dynamic DNS to manage the public IP, and port forwarding on a home router to expose the Pi, so the site is served from a No-IP domain name.</p>
+                            <a href="https://github.com/VenuR0071/Web-hosting-using-Raspberry-pi">View on GitHub</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section id="education">
+            <div class="wrap">
+                <h2 class="title">Education</h2>
+                <ul class="rows">
+                    <li class="row">
+                        <div>
+                            <h3>B.E. Computer Science</h3>
+                            <p>K.C.G. College of Technology</p>
+                        </div>
+                        <div class="meta">2020 to 2024<br>CGPA 8.25</div>
+                    </li>
+                    <li class="row">
+                        <div>
+                            <h3>HSC</h3>
+                            <p>Vana Vani Matriculation Higher Secondary School</p>
+                        </div>
+                        <div class="meta">2019 to 2020<br>66%</div>
+                    </li>
+                    <li class="row">
+                        <div>
+                            <h3>SSLC</h3>
+                            <p>Vana Vani Matriculation Higher Secondary School</p>
+                        </div>
+                        <div class="meta">2017 to 2018<br>82%</div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Certifications -->
+        <section id="certifications">
+            <div class="wrap">
+                <h2 class="title">Certifications</h2>
+                <p class="lead">Open any certificate to check it yourself.</p>
+                <ul class="rows">
+                    <li class="row">
+                        <div>
+                            <h3>Red Hat System Administration (RHEL 7)</h3>
+                            <p>Red Hat, July 2017</p>
+                        </div>
+                        <button class="view-cert-btn" type="button" data-src="./rhcsa.pdf">View certificate</button>
+                    </li>
+                    <li class="row">
+                        <div>
+                            <h3>CCNAv7: Introduction to Networks</h3>
+                            <p>Cisco, December 2023</p>
+                        </div>
+                        <button class="view-cert-btn" type="button" data-src="./cisco.pdf">View certificate</button>
+                    </li>
+                    <li class="row">
+                        <div>
+                            <h3>Fundamentals of Containers, Kubernetes and OpenShift</h3>
+                            <p>Red Hat, February 2025</p>
+                        </div>
+                        <button class="view-cert-btn" type="button" data-src="./openshift.pdf">View certificate</button>
+                    </li>
+                    <li class="row">
+                        <div>
+                            <h3>Python for Data Science</h3>
+                            <p>NPTEL, August 2023</p>
+                        </div>
+                        <button class="view-cert-btn" type="button" data-src="./nptel.pdf">View certificate</button>
+                    </li>
+                    <li class="row">
+                        <div>
+                            <h3>Full Stack Development</h3>
+                            <p>Infosys SpringBoard, March 2023</p>
+                        </div>
+                        <button class="view-cert-btn" type="button" data-src="./fullstack.pdf">View certificate</button>
+                    </li>
+                    <li class="row">
+                        <div>
+                            <h3>Principles of Management</h3>
+                            <p>Great Learning, August 2023</p>
+                        </div>
+                        <button class="view-cert-btn" type="button" data-src="./management.pdf">View certificate</button>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact">
+            <div class="wrap">
+                <h2 class="title">Get in touch</h2>
+                <p class="lead">I'm open to new projects, ideas and opportunities. Email is the quickest way to reach me.</p>
+                <a class="contact-mail" href="mailto:venur0071@gmail.com">venur0071@gmail.com</a>
+                <ul class="contact-list">
+                    <li><b>Phone</b> +91 7010270071</li>
+                    <li><b>LinkedIn</b> <a href="https://linkedin.com/in/venu-r-0b721024a" target="_blank" rel="noopener">linkedin.com/in/venu-r-0b721024a</a></li>
+                    <li><b>GitHub</b> <a href="https://github.com/VenuR0071" target="_blank" rel="noopener">github.com/VenuR0071</a></li>
+                    <li><b>Location</b> Chennai, India</li>
+                </ul>
+            </div>
+        </section>
+    </main>
 
     <footer>
-        <div class="container">
-            <p>&copy; 2025 Venu R. All Rights Reserved.</p>
-        </div>
+        <div class="wrap">&copy; 2026 Venu R. All rights reserved.</div>
     </footer>
 
-    <div id="certModal" class="modal">
-        <span class="close-modal">&times;</span>
-        <!-- Changed from img to iframe -->
-        <iframe class="modal-content-iframe" id="certFrame" title="Certificate Viewer"></iframe>
+    <button class="view-resume-btn" type="button" data-src="./V7SOFT.pdf">View my resume</button>
+
+    <div id="certModal" class="modal" role="dialog" aria-modal="true" aria-label="Document viewer">
+        <button class="close-modal" type="button" aria-label="Close viewer">&times;</button>
+        <iframe class="modal-frame" id="certFrame" title="Document viewer"></iframe>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Project Filtering Logic ---
-            const filterContainer = document.querySelector('.project-filters');
-            const projectCards = document.querySelectorAll('.project-card');
+            var body = document.body;
 
-            filterContainer.addEventListener('click', (e) => {
-                if (e.target.classList.contains('filter-btn')) {
-                    // Update active button
-                    filterContainer.querySelector('.active').classList.remove('active');
-                    e.target.classList.add('active');
+            /* ---- Project filters ---- */
+            var filterBtns = document.querySelectorAll('.filter-btn');
+            var cards = document.querySelectorAll('.project-card');
+            filterBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    filterBtns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-pressed', 'true');
+                    var f = btn.getAttribute('data-filter');
+                    cards.forEach(function (card) {
+                        var show = f === 'all' || card.getAttribute('data-domain').split(' ').indexOf(f) !== -1;
+                        card.style.display = show ? 'flex' : 'none';
+                    });
+                });
+            });
 
-                    const filter = e.target.getAttribute('data-filter');
+            /* ---- Certificate and resume viewer ---- */
+            var modal = document.getElementById('certModal');
+            var frame = document.getElementById('certFrame');
+            var closeBtn = modal.querySelector('.close-modal');
+            var lastFocus = null;
 
-                    // Show/hide project cards
-                    projectCards.forEach(card => {
-                        if (filter === 'all' || card.getAttribute('data-domain').includes(filter)) {
-                            card.style.display = 'flex';
-                        } else {
-                            card.style.display = 'none';
+            function openViewer(src, trigger) {
+                lastFocus = trigger;
+                frame.src = src;
+                modal.classList.add('open');
+                body.classList.add('no-scroll');
+                closeBtn.focus();
+            }
+            function closeViewer() {
+                modal.classList.remove('open');
+                frame.src = '';
+                body.classList.remove('no-scroll');
+                if (lastFocus) lastFocus.focus();
+            }
+            document.querySelectorAll('.view-cert-btn, .view-resume-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () { openViewer(btn.getAttribute('data-src'), btn); });
+            });
+            closeBtn.addEventListener('click', closeViewer);
+            modal.addEventListener('click', function (e) { if (e.target === modal) closeViewer(); });
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && modal.classList.contains('open')) closeViewer();
+            });
+
+            /* ---- Theme toggle (remembers choice) ---- */
+            var themeBtns = document.querySelectorAll('[data-theme-toggle]');
+            function applyTheme(dark) {
+                body.classList.toggle('dark-theme', dark);
+                themeBtns.forEach(function (b) {
+                    b.setAttribute('aria-pressed', dark ? 'true' : 'false');
+                    var label = b.querySelector('.theme-label');
+                    var short = b.closest('.topbar');
+                    label.textContent = dark ? (short ? 'Light' : 'Light mode') : (short ? 'Dark' : 'Dark mode');
+                });
+            }
+            var saved = null;
+            try { saved = localStorage.getItem('theme'); } catch (e) {}
+            applyTheme(saved === 'dark');
+            themeBtns.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    var dark = !body.classList.contains('dark-theme');
+                    applyTheme(dark);
+                    try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+                });
+            });
+
+            /* ---- Mobile menu ---- */
+            var menuToggle = document.getElementById('menuToggle');
+            var mobileMenu = document.getElementById('mobileMenu');
+            function setMenu(open) {
+                mobileMenu.classList.toggle('active', open);
+                menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                menuToggle.textContent = open ? 'Close' : 'Menu';
+                body.classList.toggle('no-scroll', open);
+            }
+            menuToggle.addEventListener('click', function () { setMenu(!mobileMenu.classList.contains('active')); });
+            mobileMenu.querySelectorAll('a').forEach(function (a) {
+                a.addEventListener('click', function () { setMenu(false); });
+            });
+
+            /* ---- Rail lights follow the section in view ---- */
+            var links = document.querySelectorAll('#railNav a');
+            var map = {};
+            links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+            if ('IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting && map[entry.target.id]) {
+                            links.forEach(function (l) { l.classList.remove('active'); });
+                            map[entry.target.id].classList.add('active');
                         }
                     });
-                }
-            });
-
-            // --- Certificate and Resume Modal Logic ---
-            const modal = document.getElementById('certModal');
-            const certFrame = document.getElementById('certFrame'); // Reference to the iframe
-            const viewCertBtns = document.querySelectorAll('.view-cert-btn');
-            const viewResumeBtn = document.querySelector('.view-resume-btn'); // New: Resume button
-            const closeModal = document.querySelector('.close-modal');
-
-            // Handle View Certificate buttons
-            viewCertBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    modal.style.display = 'flex';
-                    certFrame.src = btn.getAttribute('data-src'); // Set iframe src
-                });
-            });
-
-            // Handle View Resume button
-            if (viewResumeBtn) { // Check if the resume button exists
-                viewResumeBtn.addEventListener('click', () => {
-                    modal.style.display = 'flex';
-                    certFrame.src = viewResumeBtn.getAttribute('data-src'); // Set iframe src for resume
+                }, { rootMargin: '-35% 0px -55% 0px' });
+                Object.keys(map).forEach(function (id) {
+                    var el = document.getElementById(id);
+                    if (el) io.observe(el);
                 });
             }
-
-            // Close modal events
-            closeModal.addEventListener('click', () => {
-                modal.style.display = 'none';
-                certFrame.src = ''; // Clear iframe src when closing
-            });
-
-            window.addEventListener('click', (e) => {
-                if (e.target == modal) {
-                    modal.style.display = 'none';
-                    certFrame.src = ''; // Clear iframe src when closing by clicking outside
-                }
-            });
-
-            // --- Theme Toggle Logic ---
-            const themeToggle = document.getElementById('checkbox');
-            const body = document.body;
-
-            // Check for saved theme preference
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-theme');
-                themeToggle.checked = true;
-            }
-
-            themeToggle.addEventListener('change', () => {
-                if (themeToggle.checked) {
-                    body.classList.add('dark-theme');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    body.classList.remove('dark-theme');
-                    localStorage.setItem('theme', 'light');
-                }
-            });
-
-            // --- Mobile Navigation Logic ---
-            const menuToggle = document.getElementById('menuToggle');
-            const mobileMenu = document.getElementById('mobileMenu');
-            const mobileNavLinks = mobileMenu.querySelectorAll('a');
-
-            menuToggle.addEventListener('click', () => {
-                mobileMenu.classList.toggle('active');
-                menuToggle.classList.toggle('open');
-                document.body.classList.toggle('no-scroll');
-            });
-
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.remove('active');
-                    menuToggle.classList.remove('open');
-                    document.body.classList.remove('no-scroll');
-                });
-            });
         });
     </script>
-
 </body>
 
 </html>
